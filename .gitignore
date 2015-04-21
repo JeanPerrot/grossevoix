@@ -1,0 +1,8 @@
+*.env
+bin
+dist
+node_modules
+config/runtime.json
+dump.rdb
+*.log
+coverage.html
