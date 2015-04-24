@@ -16,6 +16,9 @@ Using the system is done by
 It uses a local, running sonos api server
 https://github.com/jishi/node-sonos-http-api
 
+A local TTS command generates a file, then exposes it to the SONOS api
+[or could simply serve it directly from an endpoint...!]
+
 
 #### TODO -
 It would be fun to use docker to package & launch the node-sonos-http-api server (and this one)
