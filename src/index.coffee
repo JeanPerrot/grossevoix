@@ -10,7 +10,7 @@ app.use router.middleware()
 routes.apply(router)
 
 unless module.parent?
-  port = process.env.PORT or 3000
+  port = process.env.PORT or 49160
   console.log "starting the app on port %d", port
   app.listen port
 

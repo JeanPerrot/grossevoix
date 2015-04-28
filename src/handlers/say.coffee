@@ -10,4 +10,4 @@ module.exports =
       if err
         res.status(500).end()
       else
-        res.send 'ok'
+        res.send 'said'

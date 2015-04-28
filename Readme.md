@@ -13,8 +13,7 @@ Using the system is done by
 
 
 #### libraries
-It uses a local, running sonos api server
-https://github.com/jishi/node-sonos-http-api
+It uses the sonos api library
 
 A local TTS command generates a file, then exposes it to the SONOS api
 [or could simply serve it directly from an endpoint...!]
