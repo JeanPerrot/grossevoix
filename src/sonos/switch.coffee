@@ -42,11 +42,24 @@ find_coordinator = (callback)->
         found = true
         callback null, device
 
+# TODO get to the previously played track?
 play_now = (url, callback)->
   find_coordinator (err, dev)->
-    dev.queue url, 1, (err, playing)->
-      dev.stop (err)->
-        dev.play callback
+    dev.getCurrentState (err, current)->
+      dev.currentTrack (err, track)->
+        # use that to find in queue? better to get the queue index with a better API
+        console.log track
+        dev.play url, (err)->
+          interval = setInterval ->
+            dev.getCurrentState (err, state)->
+              if state != 'playing'
+                clearInterval interval
+                dev.selectQueue (err)->
+                  if current == 'playing'
+                    dev.play callback
+                  else
+                    callback()
+          , 1000
 
 
 module.exports =
