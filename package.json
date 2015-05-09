@@ -17,9 +17,12 @@
     "express-validator": "^2.8.0",
     "node-libnmap": "^0.1.12",
     "request": "^2.55.0",
+    "shelljs": "^0.4.0",
     "sonos": "git+https://github.com/bencevans/node-sonos.git",
+    "superagent": "^1.2.0",
     "sys": "0.0.1",
-    "underscore": "^1.8.3"
+    "underscore": "^1.8.3",
+    "xml2js": "^0.4.8"
   },
   "devDependencies": {
     "blanket": "^1.1.6",

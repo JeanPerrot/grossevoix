@@ -6,5 +6,5 @@ url = 'http://livingears.com/music/SceneNotHeard/091909/Do%20You%20Mind%20Kyla.m
 describe 'switching', ->
   it 'should play', (done)->
     this.timeout 20000
-    sw.play_now url1, (err, playing)->
+    sw.play_now url, (err, playing)->
       done()
