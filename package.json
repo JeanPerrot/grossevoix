@@ -15,6 +15,7 @@
     "express-lane": "^0.3.1",
     "express-session": "~1.10.1",
     "express-validator": "^2.8.0",
+    "node-cache": "^2.1.1",
     "node-libnmap": "^0.1.12",
     "request": "^2.55.0",
     "shelljs": "^0.4.0",

@@ -21,9 +21,12 @@ parse = (out) ->
   [lines..., footer] = out.match(/[^\r\n]+/g)
   while is_header lines[0]
     [header, lines...] = lines
-  while lines.length
-    [report, status, mac, lines...] = lines
-    clients.push parseclient report, mac, status
+  try
+    while lines.length
+      [report, status, mac, lines...] = lines
+      clients.push parseclient report, mac, status
+  catch error
+    console.log error
   clients
 
 scan = (callback) ->

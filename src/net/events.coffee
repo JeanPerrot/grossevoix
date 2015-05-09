@@ -1,17 +1,17 @@
 # emit event as when a device joins the network. passes the mac address.
 scan = require './scan'
 EventEmitter = require('events').EventEmitter
-{extend} = require 'underscore'
+NodeCache = require 'node-cache'
 
-diff = (pre, post) ->
+event_disappearance_period = 300# in s
+cache = new NodeCache { stdTTL: event_disappearance_period }
+
+diff = (post) ->
   added = []
-  removed = []
-  for item in pre
-    removed.push item if item not in post
   for item in post
-    added.push item if item not in pre
-  console.log {added, removed}
-  {added, removed}
+    added.push item unless cache.get item
+    cache.set item, item if item
+  added
 
 emitter = new EventEmitter()
 
@@ -23,15 +23,13 @@ started = false
 
 start = ->
   started = true
-  last = []
   set_interval scan_interval, ->
     console.log 'starting'
     scan.scan (err, res) ->
       next = (item.mac for item in res)
-      {removed, added} = diff last, next
-      if last isnt []
-        for device in added
-          emitter.emit 'joined', device
+      added = diff next
+      for device in added
+        emitter.emit 'joined', device
       last = next
 
 emitter.start = ->
