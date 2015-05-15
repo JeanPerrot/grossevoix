@@ -1,4 +1,4 @@
-{parse, scan} = require '../src/ip/scan'
+{parse, scan} = require '../src/net/scan'
 
 nmap = """Starting Nmap 6.47 ( http://nmap.org ) at 2015-05-08 22:55 PDT
 Nmap scan report for router.asus.com (192.168.1.1)

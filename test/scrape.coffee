@@ -1,4 +1,4 @@
-{lease, clients} = require '../src/ip/scrape'
+{lease, clients} = require '../src/net/scrape'
 
 describe 'scraping', ->
   it 'should work', (done) ->
