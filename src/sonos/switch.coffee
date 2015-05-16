@@ -44,12 +44,15 @@ find_coordinator = (callback)->
 
 # TODO get to the previously played track?
 play_now = (url, callback)->
+  console.log 'playing %s', url
   find_coordinator (err, dev)->
+    return callback 'not found' unless dev?
     dev.getCurrentState (err, current)->
       dev.currentTrack (err, track)->
         # use that to find in queue? better to get the queue index with a better API
         console.log track
         dev.play url, (err)->
+          return callback err if err?
           interval = setInterval ->
             dev.getCurrentState (err, state)->
               if state != 'playing'
