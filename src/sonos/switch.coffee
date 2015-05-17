@@ -48,20 +48,24 @@ play_now = (url, callback)->
   find_coordinator (err, dev)->
     return callback 'not found' unless dev?
     dev.getCurrentState (err, current)->
+      return callback err if err?
       dev.currentTrack (err, track)->
+        return callback err if err?
         # use that to find in queue? better to get the queue index with a better API
         console.log track
-        dev.play url, (err)->
-          return callback err if err?
+        dev.play url, (play_err) ->
           interval = setInterval ->
-            dev.getCurrentState (err, state)->
-              if state != 'playing'
+            dev.getCurrentState (reset_err, state)->
+              console.log state
+              if state is 'stopped' and interval isnt null
                 clearInterval interval
-                dev.selectQueue (err)->
+                interval = null
+                dev.selectQueue (queue_err)->
                   if current == 'playing'
-                    dev.play callback
+                    dev.play (err, res) ->
+                      callback play_err or reset_err or queue_err or err
                   else
-                    callback()
+                    callback play_err or reset_err or queue_err
           , 1000
 
 
