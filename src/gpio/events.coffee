@@ -10,7 +10,7 @@ started = false
 start = ->
   started = true
   pins ({moving}) ->
-    set_interval 50, ->
+    set_interval 100, ->
       moving (res) ->
         if res
           emitter.emit 'move'
@@ -18,8 +18,5 @@ start = ->
           emitter.emit 'still'
 
 emitter.start = -> start() unless started
-
-emitter.on 'move', -> console.log 'move'
-emitter.on 'still', -> console.log 'still'
 
 module.exports = emitter
