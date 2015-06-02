@@ -11,8 +11,8 @@ within = (t1, t2, delta) ->
   d = Math.abs (t2 - t1)
   d < delta
 
-latest_join = null
-latest_move = null
+latest_join = {time:0}
+latest_move = {time:0}
 
 check = ->
   if within latest_join.time, latest_move.time, 10 * 60 * 1000
