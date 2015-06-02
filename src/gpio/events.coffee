@@ -19,4 +19,7 @@ start = ->
 
 emitter.start = -> start() unless started
 
+emitter.on 'move', -> console.log 'move'
+emitter.on 'still', -> console.log 'still'
+
 module.exports = emitter
