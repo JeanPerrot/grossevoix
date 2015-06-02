@@ -1,4 +1,4 @@
-events = require('../net/events')
+events = require './logic'
 out = require '../sound/out'
 sonos = require '../sonos/switch'
 
@@ -8,7 +8,7 @@ known =
 messages =
   'Jean': -> sonos.play_now 'http://www.miss-music.com/music/pomp_loop.mp3', ->
 
-events.on 'joined', (mac) ->
+events.on 'really_joined', (mac) ->
   known_device =  known[mac]
   msg = messages[known_device]
   if msg
