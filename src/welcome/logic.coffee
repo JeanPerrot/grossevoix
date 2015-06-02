@@ -1,0 +1,29 @@
+EventEmitter = require('events').EventEmitter
+
+# given a stream of events, decide if someone just came home (and emit an event)
+scan = require '../net/events'
+move = require '../gpio/events'
+
+# simply - if movement is detected within 10m of network join, be happy.
+emitter = new EventEmitter()
+
+within = (t1, t2, delta) ->
+  d = Math.abs (t2 - t1)
+  d < delta
+
+latest_join = null
+latest_move = null
+
+check = ->
+  if within latest_join.time, latest_move.time, 10 * 60 * 1000
+    emitter.emit 'really_joined', latest_join.id
+
+scan.on 'joined', (id) ->
+  latest_join = {id, time: new Date().getTime()}
+  check()
+
+scan.on 'move', ->
+  latest_move = {time: new Date().getTime()}
+  check()
+
+module.exports = emitter
