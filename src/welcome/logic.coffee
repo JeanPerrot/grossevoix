@@ -16,14 +16,17 @@ latest_move = {time:0}
 
 check = ->
   if within latest_join.time, latest_move.time, 10 * 60 * 1000
+    console.log 'really_joined'
     emitter.emit 'really_joined', latest_join.id
 
 scan.on 'joined', (id) ->
   latest_join = {id, time: new Date().getTime()}
+  console.log 'joined'
   check()
 
 scan.on 'move', ->
   latest_move = {time: new Date().getTime()}
+  console.log 'move'
   check()
 
 module.exports = emitter
