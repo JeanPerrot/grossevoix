@@ -19,7 +19,7 @@ check = ->
     console.log 'really_joined'
     emitter.emit 'really_joined', latest_join.id
 
-scan.on 'joined', (id) ->
+move.on 'joined', (id) ->
   latest_join = {id, time: new Date().getTime()}
   console.log 'joined'
   check()
