@@ -3,10 +3,14 @@ gpio = require 'pi-gpio'
 sensor = 12
 led = 7
 
+safe_open = (pin, mode, callback) ->
+  gpio.close pin, ->
+    gpio.open pin, mode, callback
+
 # initialize pins
 init = (callback) ->
-  gpio.open led, 'output', ->
-    gpio.open sensor, 'input', ->
+  safe_open led, 'output', ->
+    safe_open sensor, 'input', ->
       gpio.write led, 0, ->
         callback()
 
