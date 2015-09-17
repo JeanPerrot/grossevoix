@@ -4,6 +4,7 @@ sensor = 12
 led = 7
 
 safe_open = (pin, mode, callback) ->
+  console.log 'opening', pin, mode
   gpio.close pin, ->
     gpio.open pin, mode, callback
 
