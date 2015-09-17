@@ -23,6 +23,6 @@ emitter.on 'move', ->
   console.log 'movement detected'
 
 emitter.on 'still', ->
-  console.log 'detector still'
+  #console.log 'detector still'
 
 module.exports = emitter
