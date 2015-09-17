@@ -11,7 +11,8 @@ messages =
 events.on 'really_joined', (mac) ->
   console.log 'looking for message for ', mac
   known_device =  known[mac]
+  console.log 'device unknown ', mac unless known_device
   msg = messages[known_device]
   console.log 'message not found' unless msg
-  console.log 'playing message' if mgs
+  console.log 'playing message' if msg
   msg() if msg
