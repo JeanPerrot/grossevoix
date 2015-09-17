@@ -6,3 +6,4 @@ config/runtime.json
 dump.rdb
 *.log
 coverage.html
+nohup.out
