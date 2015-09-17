@@ -11,7 +11,8 @@ safe_open = (pin, mode, callback) ->
 # initialize pins
 initialized = false
 init = (callback) ->
-  return callback() unless initialized
+  console.log 'pins initialized:', initialized
+  return callback() if initialized
   initialized = true
   safe_open led, 'output', ->
     safe_open sensor, 'input', ->
