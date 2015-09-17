@@ -9,7 +9,9 @@ messages =
   'Jean': -> sonos.play_now 'http://www.miss-music.com/music/pomp_loop.mp3', ->
 
 events.on 'really_joined', (mac) ->
+  console.log 'looking for message for ', mac
   known_device =  known[mac]
   msg = messages[known_device]
-  if msg
-    msg()
+  console.log 'message not found' unless msg
+  console.log 'playing message' if mgs
+  msg() if msg
