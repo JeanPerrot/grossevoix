@@ -22,4 +22,7 @@ emitter.start = -> start() unless started
 emitter.on 'move', ->
   console.log 'movement detected'
 
+emitter.on 'still', ->
+  console.log 'detector still'
+
 module.exports = emitter

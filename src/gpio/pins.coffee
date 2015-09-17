@@ -8,7 +8,10 @@ safe_open = (pin, mode, callback) ->
     gpio.open pin, mode, callback
 
 # initialize pins
+initialized = false
 init = (callback) ->
+  callback() unless initialized
+  initialized = true
   safe_open led, 'output', ->
     safe_open sensor, 'input', ->
       gpio.write led, 0, ->
