@@ -1,4 +1,7 @@
-events = require './logic'
+scanner = require '../net/events'
+detector = require '../gpio/events'
+
+events = require('./logic')(scanner, detector)
 out = require '../sound/out'
 sonos = require '../sonos/switch'
 sonos_queue = require '../sonos/queue'
@@ -9,7 +12,7 @@ known =
 
 messages =
   'Jean': -> sonos_queue.enqueue 'http://www.miss-music.com/music/pomp_loop.mp3'
-  'Greta': -> sonos_queue.enqueue 'http://www.miss-music.com/music/pomp_loop.mp3'
+  'Greta': -> sonos_queue.enqueue 'http://archive.org/download/ClairDeLunedebussy/2009-03-30-clairdelune_64kb.mp3'
 
 events.on 'really_joined', (mac) ->
   console.log 'looking for message for ', mac
@@ -17,5 +20,5 @@ events.on 'really_joined', (mac) ->
   console.log 'device unknown ', mac unless known_device
   msg = messages[known_device]
   console.log 'message not found' unless msg
-  console.log 'playing message' if msg
+  console.log "playing message for #{known_device}"  if msg
   msg() if msg

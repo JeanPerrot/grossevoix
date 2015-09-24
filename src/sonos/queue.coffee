@@ -14,7 +14,7 @@ playing = null
 play = ->
   return if playing
   playing = true
-  var url = queue.pop url
+  url = queue.pop url
   sonos.play_now url, ->
     console.log "playing the next url in the queue"
     playing = null
