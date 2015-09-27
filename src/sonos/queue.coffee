@@ -13,11 +13,12 @@ enqueue = (url) ->
 playing = null
 play = ->
   return if playing
-  playing = true
   url = queue.pop url
+  return unless url
+  playing = true
   sonos.play_now url, ->
     console.log "playing the next url in the queue"
-    playing = null
+    playing = false
     play()
 
 module.exports =
