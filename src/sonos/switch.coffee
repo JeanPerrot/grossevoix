@@ -9,6 +9,7 @@ device_details = (device, model, callback)->
     device.getZoneInfo (err, info)->
       extend data, info unless err
       device.getTopology (err, info)->
+        return callback 'zones not found' unless info
         info.zones.forEach (group)->
           if (group.location == 'http://' + data.ip + ':' + data.port + '/xml/device_description.xml')
             extend data, group
@@ -38,6 +39,7 @@ find_coordinator = (callback)->
 
   sonos.search (device, name)=>
     device_details device, name, (err, details)->
+      return callback "details not found for #{device}" unless details
       if details.coordinator == 'true' and details.name != 'BRIDGE'
         found = true
         callback null, device
