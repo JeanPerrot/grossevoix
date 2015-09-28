@@ -17,7 +17,7 @@ messages =
   'Jean': -> sonos_queue.enqueue 'http://www.miss-music.com/music/pomp_loop.mp3'
   'Greta': -> sonos_queue.enqueue 'http://archive.org/download/ClairDeLunedebussy/2009-03-30-clairdelune_64kb.mp3'
   'Kadeg': -> sonos_queue.enqueue 'http://cs1.mp3.pm/download/46116001/Nms3aVMxYTZIQmFyWEU3aHg4RkFOa3JZMG0wNThzNHlwdEpGWHJ2ZE5tSWZkZHVlYVgxS0pNRXBiMzE2VTUvZnZTRjdPQ3FJN0dhMExOdWRiTUJSMXBDV2Z5MEdCOExMN0dsSzd4VWNSV0d4LysvaFJzaGtrZ0FEMTR0dTlvWis/Attack_On_Titan_-_Opening_Theme_full_(mp3.pm).mp3'
-  'Aiden': -> sonos_queue.enqueue 'http://cs1.mp3.pm/download/44701466/Nms3aVMxYTZIQmFyWEU3aHg4RkFOa3JZMG0wNThzNHlwdEpGWHJ2ZE5tSnJHQmFLR3JHZFZmYitlSTFjOU1sZUNnUU1pajhvT08ybk50U2lIQ1g0eGRVN3d4bVA3bG1CdGdIbXZFbDllK3lLSS85VWREdGgrMEthVWFsMzExYTU/Beyond_Two_Souls_OST_-_04._Aiden_s_Theme_(mp3.pm).mp3'
+  'Aiden': -> sonos_queue.enqueue 'http://mp3li.net/en/download.php?d=EYTo0OntzOjE6ImgiO3M6MzI6IjBiODI2OGM1YmZjOTkxMGYwYWYyYmUwZDY4YTRiODhmIjtzOjE6InQiO3M6Mzg6IkhlbnJ5IE1hbmNpbmkgLSBUaGUgUGluayBQYW50aGVyIFRoZW1lIjtzOjE6ImMiO2k6MTQ0MzQwMjA3NTtzOjI6ImlwIjtzOjEyOiI2Ny41LjE5My4xODIiO30='
 
 events.on 'really_joined', (mac) ->
   console.log 'looking for message for ', mac
