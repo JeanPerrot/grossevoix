@@ -1,12 +1,30 @@
 EventEmitter = require('events').EventEmitter
 
 # given a stream of events, decide if someone just came home (and emit an event)
-# simply - if movement is detected within 10m of network join, emit an event for this join.
-emitter = new EventEmitter()
+# simple first shot - if movement is detected within 10m of network join, emit an event for this join.
+
+# better logic --
+# we want to emit after long absences
+# a long absence is defined as the absence of a device for a long time, regardless of movement.
+# we can reprocess the events to emit a 'return-from-absence' event when a device is seen after a long interval
 
 within = (t1, t2, delta) ->
   d = Math.abs (t2 - t1)
   d < delta
+
+reprocessor = (scanner) ->
+  returned = new EventEmitter()
+  seen = {}
+  returned_interval = 4*60*60*1000
+  scanner.on 'joined', (id) ->
+    now = new Date().getTime()
+    previous = seen[id]
+    if previous and not within(previous, now,  returned_interval)
+      returned.emit 'returned', id
+    seen[id] = now
+  returned
+
+emitter = new EventEmitter()
 
 # keeps the join events from the last ten minutes
 latest_joins = []
@@ -23,9 +41,11 @@ check = ->
 
 # expect two event emitters: a scanner (joined) and a detector (move)
 listen = (scanner, detector) ->
-  scanner.on 'joined', (id) ->
+  scanner = reprocessor scanner
+
+  scanner.on 'returned', (id) ->
     latest_joins.push {id, time: new Date().getTime()}
-    console.log 'joined'
+    console.log 'returned'
     check()
 
   detector.on 'move', ->
