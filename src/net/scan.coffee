@@ -14,6 +14,7 @@ parseclient = (report, mac, status) ->
   {name, manufacturer, mac, ip: ip1 or ip2}
 
 is_header = (line)->
+  return false unless line
   line is '' or (line.indexOf('Starting') is 0) or (line.indexOf('Strange error') is 0)
 
 parse = (out) ->
