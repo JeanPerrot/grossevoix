@@ -17,11 +17,14 @@ reprocessor = (scanner) ->
   seen = {}
   returned_interval = 4*60*60*1000
   scanner.on 'joined', (id) ->
+    console.log 'processing joined for ', id
     now = new Date().getTime()
     previous = seen[id]
+    console.log 'previous is', previous
     if previous and not within(previous, now,  returned_interval)
       returned.emit 'returned', id
     seen[id] = now
+    console.log 'seen set to', seen[id]
   returned
 
 emitter = new EventEmitter()
