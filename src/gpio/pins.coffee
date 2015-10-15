@@ -23,9 +23,9 @@ init = (callback) ->
 
 moving = (cb) ->
   gpio.read sensor, (err, res) ->
-    val = 'moving' if res is 1
+    val = 'move' if res is 1
     val = 'still' if res is 0
-    cb err, res
+    cb err, val
 
 
 # turn led on or off
