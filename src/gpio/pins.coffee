@@ -30,6 +30,7 @@ moving = (cb) ->
 
 # turn led on or off
 set_led = (led, val, cb) ->
+  console.log "setting #{led} to #{val}"
   gpio.write led, ( if val then 1 else 0 ), cb or ->
 
 light = (val, cb) -> set_led led, val, cb

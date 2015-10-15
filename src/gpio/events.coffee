@@ -11,7 +11,6 @@ to_events = (probe) ->
   value = 0
   set_interval 100, ->
     probe (err, res) ->
-      console.log 'probe result', res
       return if err?
       return if res is value
       value = res
