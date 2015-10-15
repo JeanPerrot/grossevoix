@@ -1,21 +1,26 @@
 EventEmitter = require('events').EventEmitter
 pins = require './pins'
-
+gpio = require 'pi-gpio'
 
 set_interval = (interval, f) -> setInterval f, interval
 
 emitter = new EventEmitter()
 started = false
 
+to_events = (probe) ->
+  value = 0
+  set_interval 100, ->
+    probe (err, res) ->
+      return if err?
+      return if res is value
+      value = res
+      emitter.emit value
+
 start = ->
   started = true
   pins ({moving}) ->
-    set_interval 100, ->
-      moving (res) ->
-        if res
-          emitter.emit 'move'
-        else
-          emitter.emit 'still'
+    to_events moving
+
 
 emitter.start = -> start() unless started
 
@@ -23,6 +28,6 @@ emitter.on 'move', ->
   console.log 'movement detected'
 
 emitter.on 'still', ->
-  #console.log 'detector still'
+  console.log 'detector still'
 
 module.exports = emitter

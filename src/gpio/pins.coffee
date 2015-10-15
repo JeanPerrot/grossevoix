@@ -2,6 +2,8 @@ gpio = require 'pi-gpio'
 
 sensor = 12
 led = 7
+eyes_led = 8
+network_led = 10
 
 safe_open = (pin, mode, callback) ->
   console.log 'opening', pin, mode
@@ -19,15 +21,20 @@ init = (callback) ->
       gpio.write led, 0, ->
         callback()
 
-# are we currently detecting movement?
 moving = (cb) ->
   gpio.read sensor, (err, res) ->
-    return cb false if err?
-    return cb (res is 1)
+    val = 'moving' if res is 1
+    val = 'still' if res is 0
+    cb err, res
+
 
 # turn led on or off
-light = (val, cb) ->
+set_led = (led, val, cb) ->
   gpio.write led, ( if val then 1 else 0 ), cb or ->
 
+light = (val, cb) -> set_led led, val, cb
+eyes = (val, cb) -> set_led eyes_led, val, cb
+network = (val, vb) -> set_led network_led, val, cb
+
 module.exports = (callback) ->
-  init -> callback {moving,light}
+  init -> callback {moving, light, eyes, network}

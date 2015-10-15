@@ -3,6 +3,8 @@ child = require 'child_process'
 fs = require 'fs'
 os = require 'os'
 
+face = require './face'
+
 webcam_files =
   ffmpeg_pattern: "#{os.tmpdir()}webcam/stream-%06d.jpeg"
   directory: "#{os.tmpdir()}webcam"
@@ -24,28 +26,20 @@ watch = (callback) ->
     # change is emitted upon creation of a new file
     # rename is emitted sometimes instead of change
     console.log "filesystem event:", event
-    fs.stat "#{webcam_files.directory}/#{filename}", (err, stats) ->
+    file = "#{webcam_files.directory}/#{filename}"
+    fs.stat file, (err, stats) ->
       return if err?
-      callback filename if stats.isFile()
-
-# calls back with err, faces
-detect_face = (file, callback) ->
-  cv.readImage "#{webcam_files.directory}/#{file}", (err, im) ->
-    return callback err if err?
-    console.log im
-    return callback 'image has no size' if (im.width() < 1 || im.height() < 1)
-    im.detectObject cv.FACE_CASCADE, {}, callback
-
+      callback file if stats.isFile()
 
 # upon new file, detect a face on it
 process_snapshot = (file, callback) ->
   console.log 'processing', file
-  detect_face file, (err, faces) ->
+  face.detect_face file, (err, faces) ->
     if faces?.length
       console.log 'found faces: ', faces
     console.log err if err?
     # delete the file
-    fs.unlink "#{webcam_files.directory}/#{file}", (err, res) ->
+    fs.unlink file, (err, res) ->
       console.log err if err
       callback err, res if callback
 
@@ -53,6 +47,9 @@ process_snapshot = (file, callback) ->
 run = ->
   ffmpeg (camera) ->
     camera.stderr.on 'data', (data) ->
+    process.on 'SIGINT', ->
+      camera.kill 'SIGINT'
+      process.exit()
       # console.log data.toString('utf-8')
   watch process_snapshot
 
