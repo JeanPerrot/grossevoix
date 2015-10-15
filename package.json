@@ -17,6 +17,7 @@
     "express-validator": "^2.8.0",
     "node-cache": "^2.1.1",
     "node-libnmap": "^0.1.12",
+    "opencv": "^3.2.0",
     "pi-gpio": "0.0.7",
     "request": "^2.55.0",
     "shelljs": "^0.4.0",

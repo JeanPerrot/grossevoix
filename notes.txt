@@ -1,0 +1,31 @@
+
+Getting video stream from Mac OS X camera (to pipe):
+ffmpeg -f avfoundation -r 30 -i 0 -f mpeg pipe:1
+
+
+1. Spawn a process from node - done
+2. read the stream from the processing -done
+3. decode images from the stream
+4. locate face in images
+
+
+
+Getting a still frame from a video:
+
+ffmpeg -y -i out.mpg -vframes 10 -an -vcodec png -f rawvideo -s 320x240 x.png
+
+
+
+You can extract images from a video, or create a video from many images:
+For extracting images from a video:
+
+ffmpeg -i out.mpg -r 1 -s 320x240 -f mpg foo-%03d.jpeg
+This will extract one video frame per second from the video and will output them in files named foo-001.jpeg, foo-002.jpeg, etc. Images will be rescaled to fit the new WxH values.
+
+Locally --
+1. Spawn a process from node
+2. that issues image files
+3. read the files and detect face
+4. delete files
+
+ffmpeg -f avfoundation -r 30 -i 0 -r 1 foo-%03d.jpeg
