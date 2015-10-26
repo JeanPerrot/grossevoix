@@ -17,9 +17,13 @@ init = (callback) ->
   return callback() if initialized
   initialized = true
   safe_open led, 'output', ->
-    safe_open sensor, 'input', ->
-      gpio.write led, 0, ->
-        callback()
+    gpio.write led, 0, ->
+      safe_open eyes_led, 'output', ->
+        gpio.write eyes_led, 0, ->
+          safe_open network_led, 'output', ->
+            gpio.write network_led, 0, ->
+              safe_open sensor, 'input', ->
+                callback()
 
 moving = (cb) ->
   gpio.read sensor, (err, res) ->
